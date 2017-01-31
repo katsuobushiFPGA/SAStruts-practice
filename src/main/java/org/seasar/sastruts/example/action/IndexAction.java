@@ -15,10 +15,12 @@
  */
 package org.seasar.sastruts.example.action;
 
+import org.seasar.framework.aop.annotation.Trace;
 import org.seasar.struts.annotation.Execute;
 
 public class IndexAction {
-	
+
+	@Trace
     @Execute(validator = false)
 	public String index() {
         return "index.jsp";
