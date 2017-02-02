@@ -18,5 +18,19 @@
   </initMethod>
 </component>
 
+<!--  examples.dto 以下を自動でコンポーネントに登録する。 -->
+<component
+  class="org.seasar.framework.container.autoregister.FileSystemComponentAutoRegister">
+  <property name="instanceDef">
+    @org.seasar.framework.container.deployer.InstanceDefFactory@SINGLETON
+  </property>
+  <property name="autoNaming">
+    <component class="org.seasar.framework.container.autoregister.DefaultAutoNaming"/>
+  </property>
+  <initMethod name="addClassPattern">
+    <arg>"examples.dto"</arg>
+    <arg>".*Dto"</arg>
+  </initMethod>
+</component>
 
 </components>
