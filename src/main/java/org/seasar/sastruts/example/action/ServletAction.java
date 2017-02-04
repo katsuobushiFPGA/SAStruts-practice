@@ -2,6 +2,7 @@ package org.seasar.sastruts.example.action;
 
 import javax.annotation.Resource;
 
+import org.seasar.framework.aop.annotation.RemoveSession;
 import org.seasar.sastruts.example.dto.SampleDto;
 import org.seasar.sastruts.example.form.ServletForm;
 import org.seasar.struts.annotation.ActionForm;
@@ -16,6 +17,7 @@ public class ServletAction {
 	protected ServletForm servletForm;
 
 	@Execute (validator=false)
+	@RemoveSession(name = "sampleDto")
 	public String index() {
 		return "index.jsp";
 	}
