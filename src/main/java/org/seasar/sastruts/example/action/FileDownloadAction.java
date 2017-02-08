@@ -16,6 +16,7 @@ import org.seasar.framework.aop.annotation.Trace;
 import org.seasar.sastruts.example.form.FileDownloadForm;
 import org.seasar.struts.annotation.ActionForm;
 import org.seasar.struts.annotation.Execute;
+import org.seasar.struts.util.RequestUtil;
 import org.seasar.struts.util.ResponseUtil;
 
 public class FileDownloadAction {
@@ -42,8 +43,16 @@ public class FileDownloadAction {
     @Execute(validator=false)
 	public String download() throws FileNotFoundException, IOException {
         String path = application.getRealPath("/WEB-INF/work/" + this.fileDownloadForm.selectFileName);
+        String fileName =  this.fileDownloadForm.selectFileName;
+        String userAgent = RequestUtil.getRequest().getHeader("USER-AGENT");
+        if(userAgent.indexOf("MSIE") >= 0 && userAgent.indexOf("Opera") < 0) {
+        	fileName = new String(fileName.getBytes("Windows31-J"),"ISO8859_1");
+        }
+        else {
+        	fileName = new String(fileName.getBytes("UTF-8"),"ISO8859_1");
+        }
         try {
-            ResponseUtil.download(this.fileDownloadForm.selectFileName,new ByteArrayInputStream(readAll(path).getBytes("Windows-31J")));
+            ResponseUtil.download(fileName,new ByteArrayInputStream(readAll(path).getBytes("Windows-31J")));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
